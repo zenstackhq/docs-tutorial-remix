@@ -4,6 +4,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "run-s build:*",
+    "build:zenstack": "npx zenstack generate && npx prisma db push",
     "build:css": "npm run generate:css -- --minify",
     "build:remix": "remix build",
     "dev": "run-p dev:*",
@@ -20,7 +21,9 @@
     "pretest:e2e:run": "npm run build",
     "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"npx cypress run\"",
     "typecheck": "tsc && tsc -p cypress",
-    "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"
+    "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run",
+    "package-clean": "npm rm zenstack @zenstackhq/runtime",
+    "up": "npm run package-clean && npm install -D --save-exact zenstack@latest && npm install --save-exact @zenstackhq/runtime@latest"
   },
   "prettier": {},
   "eslintIgnore": [
@@ -34,7 +37,7 @@
     "@remix-run/react": "^1.14.1",
     "@remix-run/serve": "^1.14.1",
     "@remix-run/server-runtime": "^1.14.1",
-    "@zenstackhq/runtime": "^1.0.0-alpha.62",
+    "@zenstackhq/runtime": "1.0.0-beta.21",
     "bcryptjs": "^2.4.3",
     "isbot": "^3.6.5",
     "react": "^18.2.0",
@@ -81,7 +84,7 @@
     "vite": "^4.0.4",
     "vite-tsconfig-paths": "^3.6.0",
     "vitest": "^0.27.2",
-    "zenstack": "^1.0.0-alpha.62"
+    "zenstack": "1.0.0-beta.21"
   },
   "engines": {
     "node": ">=14"

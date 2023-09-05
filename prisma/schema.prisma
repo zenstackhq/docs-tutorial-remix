@@ -10,6 +10,7 @@ datasource db {
 
 generator client {
     provider = "prisma-client-js"
+    previewFeatures = ["extendedWhereUnique","fieldReference"]
 }
 
 model User {
@@ -19,14 +20,12 @@ model User {
     updatedAt DateTime @updatedAt()
     password Password?
     posts Post[]
-    zenstack_guard Boolean @default(true)
 }
 
 model Password {
     hash String
     user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     userId String @unique()
-    zenstack_guard Boolean @default(true)
 }
 
 /// @@allow('all', auth() == user)
@@ -40,7 +39,4 @@ model Post {
     updatedAt DateTime @updatedAt()
     user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     userId String
-    zenstack_guard Boolean @default(true)
-    zenstack_transaction String?
-    @@index([zenstack_transaction])
 }
