@@ -1,11 +1,11 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { getPosts } from "~/models/post.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   const posts = await getPosts({ userId });
   return json({ posts });

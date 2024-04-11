@@ -1,6 +1,6 @@
-import type { ActionArgs, LoaderArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useCatch, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import {
   deletePost,
@@ -11,7 +11,7 @@ import {
 
 import { requireUserId } from "~/session.server";
 
-export async function loader({ request, params }: LoaderArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   invariant(params.postId, "await not found");
 
@@ -22,7 +22,7 @@ export async function loader({ request, params }: LoaderArgs) {
   return json({ post });
 }
 
-export async function action({ request, params }: ActionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
   invariant(params.postId, "postId not found");
 
@@ -85,14 +85,4 @@ export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
 
   return <div>An unexpected error occurred: {error.message}</div>;
-}
-
-export function CatchBoundary() {
-  const caught = useCatch();
-
-  if (caught.status === 404) {
-    return <div>Post not found</div>;
-  }
-
-  throw new Error(`Unexpected caught response with status: ${caught.status}`);
 }

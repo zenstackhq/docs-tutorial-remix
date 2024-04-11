@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -9,20 +9,12 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { getUser } from "./session.server";
+import styles from "~/tailwind.css?url";
 
-export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
-};
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
-export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "Remix Notes",
-  viewport: "width=device-width,initial-scale=1",
-});
-
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   return json({
     user: await getUser(request),
   });

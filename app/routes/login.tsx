@@ -1,4 +1,4 @@
-import type { ActionArgs, LoaderArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import * as React from "react";
@@ -7,17 +7,17 @@ import { createUserSession, getUserId } from "~/session.server";
 import { verifyLogin } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
   return json({});
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: LoaderFunctionArgs) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/notes");
+  const redirectTo = safeRedirect(formData.get("redirectTo"), "/posts");
   const remember = formData.get("remember");
 
   if (!validateEmail(email)) {
@@ -59,14 +59,16 @@ export async function action({ request }: ActionArgs) {
 }
 
 export const meta: MetaFunction = () => {
-  return {
-    title: "Login",
-  };
+  return [
+    {
+      title: "Login",
+    },
+  ];
 };
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") || "/notes";
+  const redirectTo = searchParams.get("redirectTo") || "/posts";
   const actionData = useActionData<typeof action>();
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);

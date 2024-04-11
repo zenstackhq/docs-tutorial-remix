@@ -1,12 +1,11 @@
-import type { ActionArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import { type ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import * as React from "react";
 import { createPost } from "~/models/post.server";
 
 import { requireUserId } from "~/session.server";
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
