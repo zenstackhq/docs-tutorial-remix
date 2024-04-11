@@ -16,9 +16,8 @@
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
     "start": "remix-serve build",
     "typecheck": "tsc",
-    "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run",
     "package-clean": "npm rm zenstack @zenstackhq/runtime",
-    "up": "npm run package-clean && npm install -D --save-exact zenstack@latest && npm install --save-exact @zenstackhq/runtime@latest"
+    "up": "npm run package-clean && npm install -D --save-exact zenstack@next && npm install --save-exact @zenstackhq/runtime@next"
   },
   "prettier": {},
   "eslintIgnore": [
@@ -32,7 +31,7 @@
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
     "@remix-run/server-runtime": "^2.8.1",
-    "@zenstackhq/runtime": "1.12.2",
+    "@zenstackhq/runtime": "2.0.0-beta.10",
     "bcryptjs": "^2.4.3",
     "isbot": "^3.6.5",
     "react": "^18.2.0",
@@ -79,7 +78,7 @@
     "vite": "^5.2.8",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^0.27.2",
-    "zenstack": "1.12.2"
+    "zenstack": "2.0.0-beta.10"
   },
   "engines": {
     "node": ">=14"
