@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { withPresets } from "@zenstackhq/runtime";
+import { enhance } from "@zenstackhq/runtime";
 
 let prisma: PrismaClient;
 
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 export function getEnhancedPrisma(userId: string) {
-  return withPresets(prisma, { user: { id: userId } });
+  return enhance(prisma, { user: { id: userId } });
 }
 
 export { prisma };

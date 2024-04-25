@@ -15,15 +15,7 @@ export function createPost({
   userId: User["id"];
 }) {
   return getEnhancedPrisma(userId).post.create({
-    data: {
-      title,
-      body,
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
-    },
+    data: { title, body },
   });
 }
 
